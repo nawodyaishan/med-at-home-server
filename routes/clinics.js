@@ -108,26 +108,26 @@ router.post(`/`, async (req, res) => {
 })
 
 router.put('/:id', uploadOptions.single('image'), async (req, res) => {
-                if (!mongoose.isValidObjectId(req.params.id)) {
-                    return res.status(400).send('Invalid Clinic Id');
-                }
-                const category = await Category.findById(req.body.category);
-                if (!category) return res.status(400).send('Invalid Category');
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).send('Invalid Clinic Id');
+    }
+    const category = await Category.findById(req.body.category);
+    if (!category) return res.status(400).send('Invalid Category');
 
-                const clinic = await Clinic.findById(req.params.id);
-                if (!clinic) return res.status(400).send('Invalid Clinic!');
+    const clinic = await Clinic.findById(req.params.id);
+    if (!clinic) return res.status(400).send('Invalid Clinic!');
 
-                const file = req.file;
-                let imagepath;
+    const file = req.file;
+    let imagepath;
 
-                if (file) {
-                    const fileName = file.filename;
-                    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-                    imagepath = `${basePath}${fileName}`;
-                } else {
-                    imagepath = clinic.image;
-                }
-    
+    if (file) {
+        const fileName = file.filename;
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+        imagepath = `${basePath}${fileName}`;
+    } else {
+        imagepath = clinic.image;
+    }
+
     const updatedClinic = await Clinic.findByIdAndUpdate(
         req.params.id, {
             name: req.body.name,

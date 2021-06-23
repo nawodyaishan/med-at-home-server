@@ -20,10 +20,6 @@ const clinicSchema = mongoose.Schema({
     images: [{
         type: String
     }],
-    ownership: {
-        type: String,
-        default: ''
-    },
     price : {
         type: Number,
         default:0
